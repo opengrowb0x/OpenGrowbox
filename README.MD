@@ -10,7 +10,7 @@ Open source software & hardware. Fully featured for hydroponics or soil based gr
   - 📒 Historical data on device
   - 📱 Mobile App access, Alerts & Notifications. 
 
-## The hardware uses
+## The hardware
 
 - 1 Raspberry Pi 3 or newer recommended (as video generation tasks can take a long time on older devices)
 - 1 Raspberry Pi power supply 
@@ -28,19 +28,19 @@ Open source software & hardware. Fully featured for hydroponics or soil based gr
 - 12V power supply (for driving the pumps, fans)
  
 
-## The software uses
+## The software
 
-- **GPIO api** for sensors, relays and more.
+- **wiringpi GPIO api** for sensors, relays and more.
 - **Mosquitto MQTT** for IoT messaging 
-- **ffmpeg** & **imagemagick** for growlapse videos
+- **ffmpeg** & **imagemagick** for growlapse (timelapse) videos & pictures
 - **libcamera** for taking photos
 - **sqlite3** for persistence
 
 ## Install Growbox Control 
 
-On your RaspberryPiOs, Raspbian, Ubuntu or any Debian based distribution.
+On your RaspberryPi OS, Raspbian, Ubuntu or any Debian based distribution.
 
-Remember that before installing you need to go through the specific guides:
+Remember that before installing you need to go through the specific guides for setting up the hardware:
 
 - [LightsFans.md](./extras/docs/public/LightsFans.md)
 - [TemperatureHumidity.md](./extras/docs/public/TemperatureHumidity.md)
@@ -83,7 +83,7 @@ There's separate guides for each of these modules.
 - [WateringNutrients.md](./extras/docs/public/WateringNutrients.md)
 
     
-### List v2 ports
+### List ports
 After you've connected the wires and can successfully use the sensor/module/pump using the **gpio** command, you can update the port's address in the database.
 
     sqlite3 growbox.db "select * from ports;"
@@ -103,6 +103,8 @@ After you've connected the wires and can successfully use the sensor/module/pump
 
 
 ### Adjust the GPIO ports for each input and output ports 
+Growbox uses the 
+
 
     sqlite3 growbox.db "update ports set gpio = 4 where portId = 'lights';"
     sqlite3 growbox.db "update ports set gpio = 17 where portId = 'fan';"

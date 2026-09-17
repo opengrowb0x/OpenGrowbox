@@ -1,9 +1,8 @@
 package persistence.sqlite;
 
-import persistence.model.DailyDataBean;
+import persistence.model.DailyData;
 import persistence.DbManager;
 import persistence.PersistenceApi;
-import persistence.config.GrowboxConstants;
 import persistence.model.GrowPeriodEntity;
 import persistence.model.PortDataEntity;
 import persistence.model.PortEntity;
@@ -16,9 +15,6 @@ import java.util.logging.Logger;
 public class DefaultPersistenceApi implements PersistenceApi {
 
     private static final Logger log = Logger.getLogger(DefaultPersistenceApi.class.getSimpleName());
-
-    @Deprecated
-    private GrowboxConstants constants;
 
     private static DbManager db;
 
@@ -38,7 +34,7 @@ public class DefaultPersistenceApi implements PersistenceApi {
 
     @Override
     public int getGPIOPort(String inputOutputId) {
-        return db.getPort(inputOutputId).gpio;
+        return db.getPort(inputOutputId).gpio();
     }
 
     @Override
@@ -62,7 +58,7 @@ public class DefaultPersistenceApi implements PersistenceApi {
     }
 
     @Override
-    public List<DailyDataBean> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId) {
+    public List<DailyData> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId) {
         return db.getDailyPortData(startDate, endDate, portId);
     }
 
@@ -86,7 +82,7 @@ public class DefaultPersistenceApi implements PersistenceApi {
     }
 
     @Override
-    public void createGrowPeriods(GrowPeriodEntity growPeriodEntity) {
+    public void createGrowPeriod(GrowPeriodEntity growPeriodEntity) {
         try {
             db.insertGrowPeriod(growPeriodEntity);
         } catch (SQLException | ClassNotFoundException e) {

@@ -27,6 +27,7 @@ public class PortDataEntity {
         this.value = value;
     }
 
+
     @Override
     public String toString() {
         return "PortDataEntity{" +

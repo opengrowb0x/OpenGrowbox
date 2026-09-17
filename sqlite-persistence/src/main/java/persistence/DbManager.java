@@ -1,7 +1,7 @@
 package persistence;
 
-import persistence.config.GrowboxConstants;
-import persistence.model.DailyDataBean;
+import persistence.config.PersistenceConstants;
+import persistence.model.DailyData;
 import persistence.model.GrowPeriodEntity;
 import persistence.model.PortDataEntity;
 import persistence.model.PortEntity;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public final class DbManager {
+public class DbManager {
 
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -33,7 +33,7 @@ public final class DbManager {
     }
 
     public static DbManager instantiateDbManager(String homeDirectory) {
-        String dbUrl = GrowboxConstants.getDbUrl(homeDirectory);
+        String dbUrl = PersistenceConstants.getDbUrl(homeDirectory);
         log.info("init db manager with file " + dbUrl);
         return new DbManager(dbUrl);
     }
@@ -86,12 +86,11 @@ public final class DbManager {
             stmt.setInt(2, limit);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("readingId");
+                Integer id = rs.getInt("readingId");
                 String date = rs.getString("date");
                 Float value = rs.getFloat("value");
-
                 final LocalDateTime calendar = getCalendarFromTimeString(date);
-                PortDataEntity sd = new PortDataEntity(inputOutputId, calendar, value);
+                PortDataEntity sd = new PortDataEntity(id, inputOutputId, calendar, value);
                 found.add(sd);
             }
             rs.close();
@@ -360,8 +359,8 @@ public final class DbManager {
                 vegetationDaylightHours, floweringDaylightHours, getCalendarFromTimeString(startDate), growboxState, wateringSeconds, nutrientACDosingSeconds, nutrientBDosingSeconds, floodSeconds);
     }
 
-    public List<DailyDataBean> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId) {
-        List<DailyDataBean> found = new ArrayList<>();
+    public List<DailyData> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId) {
+        List<DailyData> found = new ArrayList<>();
         Connection c;
         PreparedStatement stmt;
         try {
@@ -376,7 +375,7 @@ public final class DbManager {
                 float min = rs.getFloat(2);
                 float max = rs.getFloat(3);
                 float avg = rs.getFloat(4);
-                final DailyDataBean gpe = new DailyDataBean(getLocalDateFromString(date), min, max, avg);
+                final DailyData gpe = new DailyData(getLocalDateFromString(date), min, max, avg);
                 found.add(gpe);
             }
             rs.close();

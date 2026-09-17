@@ -13,6 +13,7 @@ public class GrowPeriodEntity implements Serializable {
     public final int vegetationDaylightHours;
     public final int floweringDaylightHours;
     public final LocalDateTime startDate;
+
     @Deprecated //calculated field using the current date and start and total days
     public String growboxState;
 

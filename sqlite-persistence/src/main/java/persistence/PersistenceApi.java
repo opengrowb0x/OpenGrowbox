@@ -1,14 +1,13 @@
 package persistence;
 
-import persistence.model.DailyDataBean;
-import persistence.model.GrowPeriodEntity;
+import persistence.model.DailyData;
 import persistence.model.PortDataEntity;
 import persistence.model.PortEntity;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface PersistenceApi {
+public interface PersistenceApi extends GrowPeriodApi {
 
     int getGPIOPort(String portId) throws Exception;
 
@@ -20,15 +19,8 @@ public interface PersistenceApi {
 
     List<PortDataEntity> getLatestPortData(String portId, int limit);
 
-    List<DailyDataBean> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId);
+    List<DailyData> getDailyPortData(LocalDate startDate, LocalDate endDate, String portId);
 
     void createPortData(PortDataEntity portDataEntity);
 
-    void updateGrowPeriod(GrowPeriodEntity growPeriodEntity);
-
-    GrowPeriodEntity getGrowPeriod(int id);
-
-    List<GrowPeriodEntity> getGrowPeriods();
-
-    void createGrowPeriods(GrowPeriodEntity growPeriodEntity);
 }

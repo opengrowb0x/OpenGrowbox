@@ -3,7 +3,7 @@ package persistence;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import persistence.model.DailyDataBean;
+import persistence.model.DailyData;
 import persistence.model.GrowPeriodEntity;
 import persistence.model.PortDataEntity;
 
@@ -119,9 +119,9 @@ public class DbManagerTest {
         System.out.println(waterData.toString());
         final GrowPeriodEntity firstPeriod = db.listGrowPeriods().get(0);
 
-        List<DailyDataBean> dailyData = db.getDailyPortData(firstPeriod.startDate.toLocalDate(), null, waterData.inputOutputId);
+        List<DailyData> dailyData = db.getDailyPortData(firstPeriod.startDate.toLocalDate(), null, waterData.inputOutputId);
 
-        for (DailyDataBean dailyDatum : dailyData) {
+        for (DailyData dailyDatum : dailyData) {
             System.out.printf("daily " + dailyDatum.toString());
             assertTrue(dailyDatum.maximum() >= dailyDatum.minimum());
         }
