@@ -118,7 +118,7 @@ To disable a port set 'enabled' property to 0 (1 to enable) on the desired port,
     sqlite3 growbox.db "update ports set enabled = 0 where portId = 'temperature';"
 
 
-See more in the [DATABASE.MD](./extras/docs/DATABASE.MD) document.
+See more in the [DATABASE.MD](extras/docs/public/developer/DATABASE.MD) document.
 
 
 ### Manage the Growbox-Control
